@@ -13,6 +13,8 @@ class EmailFinder:
         company_domain: str | None = None,
         company_name: str | None = None,
         full_name: str | None = None,
+        custom: dict | None = None,
+        retrieve_gender: bool = False,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -25,8 +27,14 @@ class EmailFinder:
             body["company_name"] = company_name
         if full_name:
             body["fullname"] = full_name
-        if settings:
-            body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
+
+        merged_settings = dict(settings) if settings else {}
+        if retrieve_gender:
+            merged_settings["retrieve_gender"] = True
+        if merged_settings:
+            body["settings"] = merged_settings
 
         result = self._http.post("/email/find/single", body)
 
@@ -46,10 +54,13 @@ class EmailFinder:
         self,
         searches: list[dict],
         settings: dict | None = None,
+        custom: dict | None = None,
     ) -> dict:
         body: dict[str, Any] = {"searches": searches}
         if settings:
             body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
         return self._http.post("/email/find/bulk", body)
 
     def get_bulk(self, id: str) -> dict:
@@ -65,6 +76,8 @@ class AsyncEmailFinder:
         company_domain: str | None = None,
         company_name: str | None = None,
         full_name: str | None = None,
+        custom: dict | None = None,
+        retrieve_gender: bool = False,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -77,8 +90,14 @@ class AsyncEmailFinder:
             body["company_name"] = company_name
         if full_name:
             body["fullname"] = full_name
-        if settings:
-            body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
+
+        merged_settings = dict(settings) if settings else {}
+        if retrieve_gender:
+            merged_settings["retrieve_gender"] = True
+        if merged_settings:
+            body["settings"] = merged_settings
 
         result = await self._http.post("/email/find/single", body)
 
@@ -98,10 +117,13 @@ class AsyncEmailFinder:
         self,
         searches: list[dict],
         settings: dict | None = None,
+        custom: dict | None = None,
     ) -> dict:
         body: dict[str, Any] = {"searches": searches}
         if settings:
             body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
         return await self._http.post("/email/find/bulk", body)
 
     async def get_bulk(self, id: str) -> dict:

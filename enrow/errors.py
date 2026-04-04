@@ -13,7 +13,7 @@ class AuthenticationError(EnrowError):
 
 class InsufficientBalanceError(EnrowError):
     def __init__(self, message: str = "Your credit balance is insufficient."):
-        super().__init__(402, "InsufficientBalance", message)
+        super().__init__(422, "InsufficientBalance", message)
 
 
 class RateLimitError(EnrowError):

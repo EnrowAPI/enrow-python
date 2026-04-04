@@ -7,17 +7,19 @@ class EmailVerifier:
     def __init__(self, http):
         self._http = http
 
-    def single(self, email: str, settings: dict | None = None) -> dict:
+    def single(self, email: str, settings: dict | None = None, custom: dict | None = None) -> dict:
         body: dict[str, Any] = {"email": email}
         if settings:
             body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
         return self._http.post("/email/verify/single", body)
 
     def get(self, id: str) -> dict:
         return self._http.get("/email/verify/single", id=id)
 
-    def bulk(self, verifications: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
-        body: dict[str, Any] = {"verifications": verifications}
+    def bulk(self, emails: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
+        body: dict[str, Any] = {"emails": emails}
         if settings:
             body["settings"] = settings
         if custom:
@@ -32,17 +34,19 @@ class AsyncEmailVerifier:
     def __init__(self, http):
         self._http = http
 
-    async def single(self, email: str, settings: dict | None = None) -> dict:
+    async def single(self, email: str, settings: dict | None = None, custom: dict | None = None) -> dict:
         body: dict[str, Any] = {"email": email}
         if settings:
             body["settings"] = settings
+        if custom is not None:
+            body["custom"] = custom
         return await self._http.post("/email/verify/single", body)
 
     async def get(self, id: str) -> dict:
         return await self._http.get("/email/verify/single", id=id)
 
-    async def bulk(self, verifications: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
-        body: dict[str, Any] = {"verifications": verifications}
+    async def bulk(self, emails: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
+        body: dict[str, Any] = {"emails": emails}
         if settings:
             body["settings"] = settings
         if custom:

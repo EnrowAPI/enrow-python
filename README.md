@@ -62,7 +62,7 @@ verification = client.verify.single(email="tcook@apple.com")
 print(verification["qualification"])  # "valid"
 
 # Bulk
-batch = client.verify.bulk(verifications=["a@b.com", "c@d.com"])
+batch = client.verify.bulk(emails=["a@b.com", "c@d.com"])
 results = client.verify.get_bulk(batch["batch_id"])
 ```
 

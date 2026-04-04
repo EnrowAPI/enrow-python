@@ -15,6 +15,7 @@ class PhoneFinder:
         last_name: str | None = None,
         company_domain: str | None = None,
         company_name: str | None = None,
+        custom: str | None = None,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -31,6 +32,8 @@ class PhoneFinder:
             body["company_domain"] = company_domain
         if company_name:
             body["company_name"] = company_name
+        if custom is not None:
+            body["custom"] = custom
         if settings:
             body["settings"] = settings
 
@@ -70,6 +73,7 @@ class AsyncPhoneFinder:
         last_name: str | None = None,
         company_domain: str | None = None,
         company_name: str | None = None,
+        custom: str | None = None,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -86,6 +90,8 @@ class AsyncPhoneFinder:
             body["company_domain"] = company_domain
         if company_name:
             body["company_name"] = company_name
+        if custom is not None:
+            body["custom"] = custom
         if settings:
             body["settings"] = settings
 
