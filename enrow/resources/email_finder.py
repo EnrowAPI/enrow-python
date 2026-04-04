@@ -12,8 +12,7 @@ class EmailFinder:
         self,
         company_domain: str | None = None,
         company_name: str | None = None,
-        first_name: str | None = None,
-        last_name: str | None = None,
+        full_name: str | None = None,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -24,10 +23,8 @@ class EmailFinder:
             body["company_domain"] = company_domain
         if company_name:
             body["company_name"] = company_name
-        if first_name:
-            body["first_name"] = first_name
-        if last_name:
-            body["last_name"] = last_name
+        if full_name:
+            body["fullname"] = full_name
         if settings:
             body["settings"] = settings
 
@@ -43,7 +40,7 @@ class EmailFinder:
         return result
 
     def get(self, id: str) -> dict:
-        return self._http.get(f"/email/find/single/{id}")
+        return self._http.get("/email/find/single", id=id)
 
     def find_bulk(
         self,
@@ -56,7 +53,7 @@ class EmailFinder:
         return self._http.post("/email/find/bulk", body)
 
     def get_bulk(self, id: str) -> dict:
-        return self._http.get(f"/email/find/bulk/{id}")
+        return self._http.get("/email/find/bulk", id=id)
 
 
 class AsyncEmailFinder:
@@ -67,8 +64,7 @@ class AsyncEmailFinder:
         self,
         company_domain: str | None = None,
         company_name: str | None = None,
-        first_name: str | None = None,
-        last_name: str | None = None,
+        full_name: str | None = None,
         settings: dict | None = None,
         wait_for_result: bool = False,
         poll_interval: float = 2.0,
@@ -79,10 +75,8 @@ class AsyncEmailFinder:
             body["company_domain"] = company_domain
         if company_name:
             body["company_name"] = company_name
-        if first_name:
-            body["first_name"] = first_name
-        if last_name:
-            body["last_name"] = last_name
+        if full_name:
+            body["fullname"] = full_name
         if settings:
             body["settings"] = settings
 
@@ -98,7 +92,7 @@ class AsyncEmailFinder:
         return result
 
     async def get(self, id: str) -> dict:
-        return await self._http.get(f"/email/find/single/{id}")
+        return await self._http.get("/email/find/single", id=id)
 
     async def find_bulk(
         self,
@@ -111,4 +105,4 @@ class AsyncEmailFinder:
         return await self._http.post("/email/find/bulk", body)
 
     async def get_bulk(self, id: str) -> dict:
-        return await self._http.get(f"/email/find/bulk/{id}")
+        return await self._http.get("/email/find/bulk", id=id)

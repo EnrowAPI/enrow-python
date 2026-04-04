@@ -11,21 +11,21 @@ class EmailVerifier:
         body: dict[str, Any] = {"email": email}
         if settings:
             body["settings"] = settings
-        return self._http.post("/verify/single", body)
+        return self._http.post("/email/verify/single", body)
 
     def get(self, id: str) -> dict:
-        return self._http.get(f"/verify/single/{id}")
+        return self._http.get("/email/verify/single", id=id)
 
-    def bulk(self, emails: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
-        body: dict[str, Any] = {"emails": emails}
+    def bulk(self, verifications: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
+        body: dict[str, Any] = {"verifications": verifications}
         if settings:
             body["settings"] = settings
         if custom:
             body["custom"] = custom
-        return self._http.post("/verify/bulk", body)
+        return self._http.post("/email/verify/bulk", body)
 
     def get_bulk(self, id: str) -> dict:
-        return self._http.get(f"/verify/bulk/{id}")
+        return self._http.get("/email/verify/bulk", id=id)
 
 
 class AsyncEmailVerifier:
@@ -36,18 +36,18 @@ class AsyncEmailVerifier:
         body: dict[str, Any] = {"email": email}
         if settings:
             body["settings"] = settings
-        return await self._http.post("/verify/single", body)
+        return await self._http.post("/email/verify/single", body)
 
     async def get(self, id: str) -> dict:
-        return await self._http.get(f"/verify/single/{id}")
+        return await self._http.get("/email/verify/single", id=id)
 
-    async def bulk(self, emails: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
-        body: dict[str, Any] = {"emails": emails}
+    async def bulk(self, verifications: list[str], settings: dict | None = None, custom: dict | None = None) -> dict:
+        body: dict[str, Any] = {"verifications": verifications}
         if settings:
             body["settings"] = settings
         if custom:
             body["custom"] = custom
-        return await self._http.post("/verify/bulk", body)
+        return await self._http.post("/email/verify/bulk", body)
 
     async def get_bulk(self, id: str) -> dict:
-        return await self._http.get(f"/verify/bulk/{id}")
+        return await self._http.get("/email/verify/bulk", id=id)

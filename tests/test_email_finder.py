@@ -22,14 +22,12 @@ def test_find_sends_correct_body():
 
     result = client.email.find(
         company_domain="apple.com",
-        first_name="Tim",
-        last_name="Cook",
+        full_name="Tim Cook",
     )
 
     http.post.assert_called_once_with("/email/find/single", {
         "company_domain": "apple.com",
-        "first_name": "Tim",
-        "last_name": "Cook",
+        "fullname": "Tim Cook",
     })
     assert result["email"] == "tcook@apple.com"
 
@@ -44,7 +42,7 @@ def test_get_by_id():
 
     result = client.email.get("search_123")
 
-    http.get.assert_called_once_with("/email/find/single/search_123")
+    http.get.assert_called_once_with("/email/find/single", id="search_123")
     assert result["email"] == "tcook@apple.com"
 
 
@@ -58,8 +56,8 @@ def test_find_bulk():
 
     result = client.email.find_bulk(
         searches=[
-            {"company_domain": "apple.com", "first_name": "Tim", "last_name": "Cook"},
-            {"company_domain": "microsoft.com", "first_name": "Satya", "last_name": "Nadella"},
+            {"company_domain": "apple.com", "fullname": "Tim Cook"},
+            {"company_domain": "microsoft.com", "fullname": "Satya Nadella"},
         ]
     )
 
@@ -77,8 +75,7 @@ def test_find_with_polling():
 
     result = client.email.find(
         company_domain="apple.com",
-        first_name="Tim",
-        last_name="Cook",
+        full_name="Tim Cook",
         wait_for_result=True,
         poll_interval=0.01,
         timeout=5.0,

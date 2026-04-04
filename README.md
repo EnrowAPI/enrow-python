@@ -17,8 +17,7 @@ client = Enrow("your_api_key")
 
 result = client.email.find(
     company_domain="apple.com",
-    first_name="Tim",
-    last_name="Cook",
+    full_name="Tim Cook",
 )
 
 print(result["email"])  # tcook@apple.com
@@ -30,16 +29,14 @@ print(result["email"])  # tcook@apple.com
 # Find a single email
 search = client.email.find(
     company_domain="apple.com",
-    first_name="Tim",
-    last_name="Cook",
+    full_name="Tim Cook",
     settings={"country_code": "US"},
 )
 
 # Wait for result (auto-polling)
 result = client.email.find(
     company_domain="apple.com",
-    first_name="Tim",
-    last_name="Cook",
+    full_name="Tim Cook",
     wait_for_result=True,
 )
 
@@ -49,8 +46,8 @@ result = client.email.get("search_abc123")
 # Bulk search
 batch = client.email.find_bulk(
     searches=[
-        {"company_domain": "apple.com", "first_name": "Tim", "last_name": "Cook"},
-        {"company_domain": "microsoft.com", "first_name": "Satya", "last_name": "Nadella"},
+        {"company_domain": "apple.com", "fullname": "Tim Cook"},
+        {"company_domain": "microsoft.com", "fullname": "Satya Nadella"},
     ],
     settings={"webhook": "https://yourapp.com/webhook"},
 )
@@ -65,7 +62,7 @@ verification = client.verify.single(email="tcook@apple.com")
 print(verification["qualification"])  # "valid"
 
 # Bulk
-batch = client.verify.bulk(emails=["a@b.com", "c@d.com"])
+batch = client.verify.bulk(verifications=["a@b.com", "c@d.com"])
 results = client.verify.get_bulk(batch["batch_id"])
 ```
 
@@ -118,8 +115,7 @@ from enrow import AsyncEnrow
 async with AsyncEnrow("your_api_key") as client:
     result = await client.email.find(
         company_domain="apple.com",
-        first_name="Tim",
-        last_name="Cook",
+        full_name="Tim Cook",
     )
 ```
 
@@ -129,7 +125,7 @@ async with AsyncEnrow("your_api_key") as client:
 from enrow import Enrow, RateLimitError, InsufficientBalanceError, EnrowError
 
 try:
-    result = client.email.find(company_domain="apple.com", first_name="Tim", last_name="Cook")
+    result = client.email.find(company_domain="apple.com", full_name="Tim Cook")
 except RateLimitError:
     pass  # 429
 except InsufficientBalanceError:
