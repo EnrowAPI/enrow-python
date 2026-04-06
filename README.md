@@ -90,20 +90,6 @@ result = client.phone.find(
 )
 ```
 
-## Reverse Email
-
-```python
-person = client.reverse_email.find(email="tcook@apple.com")
-print(person["first_name"])  # "Tim"
-print(person["linkedin_url"])
-
-# Bulk
-batch = client.reverse_email.find_bulk(
-    emails=[{"email": "tcook@apple.com"}, {"email": "snadella@microsoft.com"}]
-)
-results = client.reverse_email.get_bulk(batch["id"])
-```
-
 ## Account
 
 ```python
@@ -145,7 +131,6 @@ except EnrowError as e:
 | Email Finder | 1 credit/email |
 | Email Verifier | 0.25 credit/email |
 | Phone Finder | 50 credits/phone |
-| Reverse Email | 5 credits/lookup |
 
 ## Links
 
