@@ -28,7 +28,7 @@ dependencies = ["httpx>=0.24.0"]
 [project.urls]
 Homepage = "https://enrow.io"
 Documentation = "https://docs.enrow.io"
-Repository = "https://github.com/enrow/enrow-python"
+Repository = "https://github.com/EnrowAPI/enrow-python"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
