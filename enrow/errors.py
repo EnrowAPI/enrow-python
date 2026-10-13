@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class EnrowError(Exception):
     def __init__(self, status: int, error: str, message: str):
         super().__init__(message)
@@ -12,8 +15,10 @@ class AuthenticationError(EnrowError):
 
 
 class InsufficientBalanceError(EnrowError):
-    def __init__(self, message: str = "Your credit balance is insufficient."):
-        super().__init__(422, "InsufficientBalance", message)
+    """HTTP 402: the account does not have enough credits for the request."""
+
+    def __init__(self, message: str = "Insufficient credits"):
+        super().__init__(402, "InsufficientBalance", message)
 
 
 class RateLimitError(EnrowError):

@@ -14,8 +14,12 @@ def _handle_error(response: httpx.Response) -> None:
         data = response.json()
     except Exception:
         data = {}
+    if not isinstance(data, dict):
+        data = {}
 
-    message = data.get("message", response.reason_phrase)
+    # Errors carry `message`, except a 402 on a single endpoint, which sends
+    # `{"reason": "...", "success": false}`.
+    message = data.get("message") or data.get("reason") or response.reason_phrase
     error = data.get("error", "UnknownError")
 
     if response.status_code == 401:

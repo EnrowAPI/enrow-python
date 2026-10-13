@@ -38,6 +38,27 @@ def test_insufficient_balance_error():
             client.email.find(company_domain="test.com")
 
 
+def test_insufficient_credits_on_a_single_endpoint_is_a_402_with_its_reason(client, api):
+    # Single endpoints answer a 402 with `reason`, not `message`.
+    api.add("POST", "/email/find/single", 402, {"reason": "Insufficient credits", "success": False})
+
+    with pytest.raises(InsufficientBalanceError) as exc_info:
+        client.email.find(full_name="Dwight Schrute", company_domain="dundermifflin.com")
+
+    assert exc_info.value.status == 402
+    assert exc_info.value.message == "Insufficient credits"
+
+
+def test_insufficient_credits_on_a_bulk_endpoint_is_a_402_with_its_message(client, api):
+    api.add("POST", "/email/verify/bulk", 402, {"message": "Insufficient credits"})
+
+    with pytest.raises(InsufficientBalanceError) as exc_info:
+        client.verify.bulk(["pam.beesly@dundermifflin.com"])
+
+    assert exc_info.value.status == 402
+    assert exc_info.value.message == "Insufficient credits"
+
+
 def test_rate_limit_error():
     with patch("httpx.Client.post") as mock_post:
         mock_post.return_value = _make_response(429, {

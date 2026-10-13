@@ -4,7 +4,6 @@ from .http import SyncHttpClient, AsyncHttpClient
 from .resources.email_finder import EmailFinder, AsyncEmailFinder
 from .resources.email_verifier import EmailVerifier, AsyncEmailVerifier
 from .resources.phone_finder import PhoneFinder, AsyncPhoneFinder
-from .resources.reverse_email import ReverseEmail, AsyncReverseEmail
 from .resources.account import Account, AsyncAccount
 
 
@@ -14,7 +13,6 @@ class Enrow:
         self.email = EmailFinder(http)
         self.verify = EmailVerifier(http)
         self.phone = PhoneFinder(http)
-        self.reverse_email = ReverseEmail(http)
         self.account = Account(http)
         self._http = http
 
@@ -34,7 +32,6 @@ class AsyncEnrow:
         self.email = AsyncEmailFinder(http)
         self.verify = AsyncEmailVerifier(http)
         self.phone = AsyncPhoneFinder(http)
-        self.reverse_email = AsyncReverseEmail(http)
         self.account = AsyncAccount(http)
         self._http = http
 
